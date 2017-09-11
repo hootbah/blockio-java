@@ -3,6 +3,7 @@ package io.block.api;
 import com.google.gson.Gson;
 import io.block.api.model.*;
 import io.block.api.utils.BlockIOException;
+import io.block.api.utils.BlockIONotFoundException;
 import io.block.api.utils.Constants;
 import io.block.api.utils.SigningUtils;
 import org.apache.http.HttpStatus;
@@ -469,7 +470,7 @@ public class BlockIO {
                 return (Response) gson.fromJson(responseString, responseType);
             case HttpStatus.SC_NOT_FOUND:
                 Response.ResponseError error = gson.fromJson(responseString, Response.ResponseError.class);
-                throw new BlockIOException("API returned error: " + error.error.message);
+                throw new BlockIONotFoundException("API returned error: " + error.error.message);
             default:
                 throw new BlockIOException("Unknown API response.");
         }
